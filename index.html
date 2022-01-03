@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>TikTok Caption Maker</title>
+
+    <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css">
+    <link rel="stylesheet" href="css/master.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.2/underscore-min.js" integrity="sha512-anTuWy6G+usqNI0z/BduDtGWMZLGieuJffU89wUU7zwY/JhmDzFrfIZFA3PY7CEX4qxmn3QXRoXysk6NBh5muQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- for exporting to png -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js" integrity="sha512-UcDEnmFoMh0dYHu0wGsf5SKB7z7i5j3GuXHCnb3i4s44hfctoLihr896bxM0zL7jGkcHQXXrJsFIL62ehtd6yQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- for emojis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.6/fuse.min.js" integrity="sha512-FwWaT/y9ajd/+J06KL9Fko1jELonJNHMUTR4nGP9MSIq4ZdU2w9/OiLxn16p/zEOZkryHi3wKYsnWPuADD328Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      // LOAD EMOJI LIST FOR KEY WORD CONVERSION
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = process;
+      xhr.open("GET", "https://cdn.jsdelivr.net/npm/emoji-json-list@1.0.0/index.min.js", true);
+      xhr.send();
+
+      var fuse;
+      function process()
+      {
+        if (xhr.readyState == 4) {
+          let resp = xhr.responseText;
+          const index1 = resp.indexOf("[[");
+          const index2 = resp.indexOf(";");
+          resp = eval(resp.slice(index1, index2));
+          // now convert to object
+          var keywords = new Set();
+          var emojiDict = [];
+          resp.forEach((item, i) => {
+            if ( !keywords.has(item[1]) ){
+              emojiDict.push({
+                emoji: item[0],
+                keywords: item[1].replaceAll('_', ' ')
+              });
+            }
+            keywords.add(item[1]);
+          });
+
+          emojiDict = Array.from(emojiDict);
+
+          // CREATE FUSE VARIABLE FOR FUZZY SEARCH
+          fuse = new Fuse(emojiDict, {
+            keys: ['keywords']
+          });
+
+          const results = fuse.search('hankey');
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <ul id="caption-gallery">
+        <!-- captions go here... (see template below) -->
+        <div id="add-caption-container">
+          <button type="button" id="add-caption-button">
+            +<br>new caption
+          </button>
+        </div>
+      </ul>
+    </main>
+
+    <script type="text/template" data-id="caption">
+      <li class="caption-wrapper">
+        <div class="caption">
+          <p contenteditable="true">
+            <br><br><br><br><br><br><br>Default Text
+          </p>
+        </div>
+        <button data-id="delete">-</button>
+        <button data-id="duplicate">duplicate</button>
+        <button data-id="capture">c</button>
+      </li>
+    </script>
+
+    <script type="text/template" data-id="emoji-suggestions">
+      <div id="emoji-suggestion-box" unselectable="on" contenteditable="false">
+        <span id="emoji-keyword"></span>
+
+        <div id="emoji-suggestions"> </div>
+        <div id="add-new-emojis">
+          <a href="this is not a link" data-id="emojipedia-link"><span id="add-new-emojis-title">add emojis to database for this keyword</span></a>
+          <input type="text"/> <button>+</button>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/javascript" src="js/app.js"></script>
+  </body>
+</html>

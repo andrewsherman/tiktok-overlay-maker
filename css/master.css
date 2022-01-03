@@ -1,0 +1,125 @@
+body, * {
+  box-sizing: border-box;
+  font-family: Helvetica, sans-serif;
+}
+
+main {
+  margin: 1em 1em;
+  text-align: center;
+}
+
+#caption-gallery {
+  display: inline-block;
+  height: 100%;
+}
+
+#caption-gallery > .caption-wrapper {
+  display: inline-block;
+  vertical-align: top;
+  height: 16rem;
+  position: relative;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+#caption-gallery .caption {
+  display: inline-flex;
+  vertical-align: top;
+  height: 100%;
+  background-color: green;
+  width: 9em;
+  align-items: center;
+  justify-content: center;
+}
+
+#caption-gallery .caption > p {
+  width: 100%;
+  height: 100%;
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: white;
+  text-shadow: 2px 2px 2px black;
+  position: relative;
+}
+
+button[data-id="delete"] {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+button[data-id="duplicate"] {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+button[data-id="capture"] {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#add-caption-container {
+  height: 16rem;
+  display: inline-flex;
+  vertical-align: top;
+  align-items: center;
+}
+
+#add-caption-button {
+  text-align: center;
+}
+
+/* Emoji Window */
+#emoji-suggestion-box {
+  text-align: center;
+  width: 12rem;
+  background-color: lightgray;
+  box-shadow: .1rem .1rem .2rem black;
+  position: relative;
+  text-shadow: none;
+
+  /* make sure text is not selectable */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  }
+  #emoji-keyword {
+    text-transform: lowercase;
+    font-weight: bold;
+    font-size: 1.4rem;
+    width: 100%;
+  }
+  #emoji-suggestions {
+    width: 100%;
+    padding: 1rem 1rem;
+  }
+  #add-new-emojis {
+    width: 100%;
+    }
+    #add-new-emojis-title {
+      font-size: .5rem;
+      text-transform: capitalize;
+      display: block;
+    }
+    #add-new-emojis > input[type=text] {
+      display: inline-flex;
+      flex-grow: 1;
+    }
+    #add-new-emojis > button {
+      /*  */
+    }
+
+
+
+img.emoji {
+   height: 1em;
+   width: 1em;
+   margin: 0 .05em 0 .1em;
+   vertical-align: -0.1em;
+}
