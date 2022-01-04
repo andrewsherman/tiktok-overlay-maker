@@ -9,22 +9,25 @@ main {
 }
 
 #caption-gallery {
-  display: inline-block;
+  display: inline-flex;
+  flex-wrap: wrap;
   height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 #caption-gallery > .caption-wrapper {
-  display: inline-block;
+  display: block;
   vertical-align: top;
   height: 16rem;
   position: relative;
-  margin-right: 1rem;
-  margin-top: 1rem;
+  margin: .5em;
 }
 
-#caption-gallery .caption {
+.caption-wrapper > .caption {
   display: inline-flex;
   vertical-align: top;
+  position: relative;
   height: 100%;
   background-color: green;
   width: 9em;
@@ -32,9 +35,8 @@ main {
   justify-content: center;
 }
 
-#caption-gallery .caption > p {
+.caption-wrapper > .caption > p {
   width: 100%;
-  height: 100%;
   text-transform: uppercase;
   font-weight: bolder;
   color: white;
@@ -63,57 +65,73 @@ button[data-id="capture"] {
   left: 0;
 }
 
-#add-caption-container {
-  height: 16rem;
-  display: inline-flex;
-  vertical-align: top;
-  align-items: center;
-}
-
 #add-caption-button {
   text-align: center;
 }
 
-/* Emoji Window */
-#emoji-suggestion-box {
-  text-align: center;
-  width: 12rem;
-  background-color: lightgray;
-  box-shadow: .1rem .1rem .2rem black;
-  position: relative;
-  text-shadow: none;
-
-  /* make sure text is not selectable */
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
+/* Editor */
+#editor {
+  display: flex;
+  position: absolute;
+  z-index: 1000;
   }
-  #emoji-keyword {
-    text-transform: lowercase;
-    font-weight: bold;
-    font-size: 1.4rem;
-    width: 100%;
-  }
-  #emoji-suggestions {
-    width: 100%;
-    padding: 1rem 1rem;
-  }
-  #add-new-emojis {
-    width: 100%;
+  #css-formatter {
+    text-align: left;
+    width: 12rem;
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
     }
-    #add-new-emojis-title {
-      font-size: .5rem;
-      text-transform: capitalize;
-      display: block;
-    }
-    #add-new-emojis > input[type=text] {
-      display: inline-flex;
+    #css-entry-box {
       flex-grow: 1;
+      background-color: white;
+      margin: .2em;
     }
-    #add-new-emojis > button {
-      /*  */
+  /* Emoji Window */
+  #emoji-suggestion-box {
+    text-align: center;
+    width: 12rem;
+    background-color: lightgray;
+    box-shadow: .1rem .1rem .2rem black;
+    position: relative;
+    text-shadow: none;
+
+    /* make sure text is not selectable */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
     }
+    #emoji-keyword {
+      text-transform: lowercase;
+      font-weight: bold;
+      font-size: 1.4rem;
+      width: 100%;
+    }
+    #close-emoji-suggestion-box {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    #emoji-suggestions {
+      width: 100%;
+      padding: 1rem 1rem;
+    }
+    #add-new-emojis {
+      width: 100%;
+      }
+      #add-new-emojis-title {
+        font-size: .5rem;
+        text-transform: capitalize;
+        display: block;
+      }
+      #add-new-emojis > input[type=text] {
+        display: inline-flex;
+        flex-grow: 1;
+      }
+      #add-new-emojis > button {
+        /*  */
+      }
 
 
 

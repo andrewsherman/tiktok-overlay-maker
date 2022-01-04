@@ -61,11 +61,9 @@
     <main>
       <ul id="caption-gallery">
         <!-- captions go here... (see template below) -->
-        <div id="add-caption-container">
-          <button type="button" id="add-caption-button">
-            +<br>new caption
-          </button>
-        </div>
+        <button type="button" id="add-caption-button">
+          +<br>new caption
+        </button>
       </ul>
     </main>
 
@@ -73,7 +71,8 @@
       <li class="caption-wrapper">
         <div class="caption">
           <p contenteditable="true">
-            <br><br><br><br><br><br><br>Default Text
+            <!-- <br><br><br><br><br><br><br> -->
+            Default Text
           </p>
         </div>
         <button data-id="delete">-</button>
@@ -82,15 +81,30 @@
       </li>
     </script>
 
-    <script type="text/template" data-id="emoji-suggestions">
-      <div id="emoji-suggestion-box" unselectable="on" contenteditable="false">
-        <span id="emoji-keyword"></span>
+    <script type="text/template" data-id="editor">
+      <div id="editor">
+        <div id="css-formatter">
+          <div id="edit-type-radios">
+            <input type="radio" name="edit-type" value="word" checked>
+            <label for="word">word</label>
+            <input type="radio" name="edit-type" value="line">
+            <label for="line">line</label>
+          </div>
 
-        <div id="emoji-suggestions"> </div>
-        <div id="add-new-emojis">
-          <a href="this is not a link" data-id="emojipedia-link"><span id="add-new-emojis-title">add emojis to database for this keyword</span></a>
-          <input type="text"/> <button>+</button>
+          <div id="css-entry-box" contenteditable="true">
+          </div>
         </div>
+
+        <div id="emoji-suggestion-box" unselectable="on" contenteditable="false">
+          <span id="emoji-keyword"></span>
+          <div id="emoji-suggestions"> </div>
+          <div id="add-new-emojis">
+            <a href="this is not a link" data-id="emojipedia-link"><span id="add-new-emojis-title">add emojis to database for this keyword</span></a>
+            <input type="text"/> <button>+</button>
+          </div>
+        </div>
+
+        <button id="close-editor">x</button>
       </div>
     </script>
 
