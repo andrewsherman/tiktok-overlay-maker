@@ -27,7 +27,6 @@ main {
 .caption-wrapper > .caption {
   display: inline-flex;
   vertical-align: top;
-  position: relative;
   height: 100%;
   background-color: green;
   width: 9em;
@@ -41,7 +40,6 @@ main {
   font-weight: bolder;
   color: white;
   text-shadow: 2px 2px 2px black;
-  position: relative;
 }
 
 button[data-id="delete"] {
@@ -95,12 +93,6 @@ button[data-id="capture"] {
     box-shadow: .1rem .1rem .2rem black;
     position: relative;
     text-shadow: none;
-
-    /* make sure text is not selectable */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
     }
     #emoji-keyword {
       text-transform: lowercase;
@@ -136,8 +128,28 @@ button[data-id="capture"] {
 
 
 img.emoji {
-   height: 1em;
-   width: 1em;
-   margin: 0 .05em 0 .1em;
-   vertical-align: -0.1em;
-}
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+  }
+  #emoji-suggestions > img.emoji {
+    opacity: 1;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+
+    border-bottom: none;
+    transition: border-bottom .25s ease-in-out;
+    -moz-transition: border-bottom .25s ease-in-out;
+    -webkit-transition: border-bottom .25s ease-in-out;
+    }
+    #emoji-suggestions > img.emoji:hover {
+       height: 1em;
+       width: 1em;
+       margin: 0 .05em 0 .1em;
+       vertical-align: -0.1em;
+
+       opacity: 0.7;
+       border-bottom: 2px solid red;
+    }

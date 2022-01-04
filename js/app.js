@@ -3,7 +3,7 @@
 
   function populateEmojis(captionElement, keyword, clickX, clickY) {
     const editor = $(_.template($('[data-id="editor"]').html())());
-
+    const keywordObject = keyword;
     // setup emoji entry panel
     keyword = keyword.toString();
     keyword = keyword.replaceAll("\n", " ");
@@ -16,10 +16,27 @@
     let result = fuse.search(keyword);
     let emojiList = '';
     for (var i = 0; i < 6; i++) {
-      emojiList += result[i].emoji;
+      if (result[i]) {
+        emojiList += result[i].emoji;
+      }
     }
     $('#emoji-keyword', editor).text(`\"${keyword}\"`);
     $('#emoji-suggestions', editor).text(emojiList);
+    twemoji.parse($('#emoji-suggestions', editor)[0], {folder: 'svg', ext: '.svg'});
+
+    $('img.emoji', editor).click(function(e) {
+      const anchorNodeValue = keywordObject.anchorNode.nodeValue;
+      const $parent = $(keywordObject.anchorNode.parentElement);
+      var range = keywordObject.getRangeAt(0);
+      console.log(range);
+      let before = $parent.text().slice(0, range.endOffset),
+          after = $parent.text().slice(range.endOffset, $parent.text().length);
+      $parent.html(`<span>${before}</span>${this.alt}<span>${after}</span>`);
+      (before + this.alt).length
+      twemoji.parse(captionElement[0], {folder: 'svg', ext: '.svg'});
+      editor.remove();
+    });
+
     $('#add-new-emojis > [data-id="emojipedia-link"]', editor).attr("href", "https://emojipedia.org/search/?q="+keyword.toLowerCase().split(" ").join('+') );
 
     // close button
@@ -33,18 +50,13 @@
 
     editor.css("top", String(clickY/oneEM + 1) + "em");
 
-    // load emojis
-    twemoji.parse($('#emoji-suggestions', editor)[0], {folder: 'svg', ext: '.svg'});
-
     $(captionElement).append(editor);
 
     // setup css-formatter
     $cssFormatter = $('#css-formatter', editor);
     $cssFormatter.height($('#emoji-suggestion-box', editor).height());
     var offset = editor.offset(), maxOffset = $(window).width() - editor.width();
-    console.log(offset);
     if (editor.offset().left < 0){
-      console.log("off screen left");
       editor.css("left", String(0-captionElement.offset().left) + 'px');
     }else if (editor.offset().left > maxOffset) {
       editor.css("left", String(maxOffset-captionElement.offset().left) + 'px');
@@ -54,7 +66,6 @@
   addCaptionFunc = function(newCaption, original){
     existingEditor = $('#editor');
     if (existingEditor.length) {
-      console.log("deleting editor");
       existingEditor.remove();
     }
 
@@ -78,26 +89,22 @@
       });
     });
 
-    newCaption.mouseup(
+    $('.caption > p', newCaption).mouseup(
       function(evt){
-        $pElement = $('.caption > p', $(this));
+        const selectedText = window.getSelection();
+        if (selectedText.toString()) {
+          const x = evt.offsetX;
+          let y = evt.offsetY + evt.target.offsetTop;
 
-        if (evt.target === $pElement[0] || $(evt.target).parent()[0] === $pElement[0]) {
-          console.log($(evt.target).html());
-          const selectedText = window.getSelection();
-          if (selectedText.toString()) {
-            const x = evt.offsetX;
-            const y = evt.offsetY + $pElement[0].offsetTop; // take account of centering of paragraph element
-            populateEmojis($(this), selectedText, x, y);
-          }
+          populateEmojis(newCaption, selectedText, x, y);
         }
       }
     );
 
     $('.caption > p', newCaption).on("input", function (){
       twemoji.parse(this, {folder: 'svg', ext: '.svg'});
-      if ($("#emoji-suggestion-box", newCaption).length){
-        $("#emoji-suggestion-box", newCaption).remove();
+      if ($("#editor", newCaption).length){
+        $("#editor", newCaption).remove();
       }
     });
 
